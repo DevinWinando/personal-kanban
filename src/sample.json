@@ -1,44 +1,16 @@
 {
-  "personal-kanban": {
-    "projects": [
-      {
-        "project-01": [
-          {
-            "id": 1,
-            "todos": [
-              {
-                "id": 1,
-                "title": "help others",
-                "desc": "asdasdasdasd"
-              },
-              {
-                "id": 2,
-                "title": "Make projects",
-                "desc": "asdsaderwasd"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "project-02": [
-          {
-            "id": 2,
-            "todos": [
-              {
-                "id": 1,
-                "title": "help others",
-                "desc": "asdasdasdasd"
-              },
-              {
-                "id": 2,
-                "title": "Make projects",
-                "desc": "asdsaderwasd"
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  }
+  "name": "projectOne",
+  "id": 1,
+  "todos": [
+    {
+      "id": 1,
+      "title": "title1",
+      "desc": "desc1"
+    },
+    {
+      "id": 2,
+      "title": "title2",
+      "desc": "desc2"
+    }
+  ]
 }

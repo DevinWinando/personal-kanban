@@ -13,10 +13,19 @@ function Input() {
     setTodos(todos);
   };
 
-  let save = (e) => {
+  function save(e) {
     e.preventDefault();
-    localStorage.setItem("personalKanban", JSON.stringify(todos));
-  };
+    const personalKanban = [
+      {
+        name: "projectOne",
+        id: 1,
+        todos: [todos],
+      },
+    ];
+
+    localStorage.setItem("personalKanban", JSON.stringify(personalKanban));
+    console.info(JSON.parse(localStorage.getItem("personalKanban")));
+  }
 
   return (
     <form action="" onSubmit={save}>
