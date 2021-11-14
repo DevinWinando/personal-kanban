@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function FormAdd() {
+function FormAdd(props) {
   let [todos, setTodos] = useState({
     title: "",
     desc: "",
@@ -24,7 +24,11 @@ function FormAdd() {
     };
 
     localStorage.setItem("personalKanban", JSON.stringify(personalKanban));
-    console.info(JSON.parse(localStorage.getItem("personalKanban")));
+    props.setShowFormAdd(false);
+  };
+
+  const handleShowFormAdd = () => {
+    props.setShowFormAdd(false);
   };
 
   return (
@@ -38,7 +42,7 @@ function FormAdd() {
           <button className="btn btn-active w-1/4 mt-3 mr-3" aria-pressed="true" type="submit">
             Save
           </button>
-          <button className="btn btn-active btn-secondary w-1/4 mt-3" aria-pressed="true">
+          <button className="btn btn-active btn-secondary w-1/4 mt-3" aria-pressed="true" onClick={handleShowFormAdd}>
             Cancel
           </button>
         </div>

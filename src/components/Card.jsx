@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import FormAdd from "./FormAdd";
 
 function Card(props) {
+  let [showFormAdd, setShowFormAdd] = useState(false);
   let [todos, setTodos] = useState([]);
 
   useEffect(() => {
@@ -9,8 +10,12 @@ function Card(props) {
     const todos = data.todos;
 
     setTodos(todos);
-    console.log(data);
+    console.log(todos);
   }, []);
+
+  const handleShowFormAdd = () => {
+    setShowFormAdd(true);
+  };
 
   return (
     <div className="card bordered h-4/5 mt-10 w-96 ml-10">
@@ -28,9 +33,23 @@ function Card(props) {
                 </div>
               </div>
             );
+
+          return false;
         })}
 
-        {props.title === "Task" ? <FormAdd /> : ""}
+        {props.category === "task" ? (
+          showFormAdd === true ? (
+            ""
+          ) : (
+            <div className="border-2 border-gray-900 rounded-md mt-3 p-4" onClick={handleShowFormAdd}>
+              <p className="font-black">+ Add Item</p>
+            </div>
+          )
+        ) : (
+          false
+        )}
+
+        {showFormAdd === true ? <FormAdd setShowFormAdd={setShowFormAdd} /> : false}
       </div>
     </div>
   );
