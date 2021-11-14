@@ -41,7 +41,7 @@ function Card(props) {
           showFormAdd === true ? (
             ""
           ) : (
-            <div className="border-2 border-gray-900 rounded-md mt-3 p-4" onClick={handleShowFormAdd}>
+            <div className="border-2 border-gray-900 rounded-md mt-3 p-4 cursor-pointer" onClick={handleShowFormAdd}>
               <p className="font-black">+ Add Item</p>
             </div>
           )
