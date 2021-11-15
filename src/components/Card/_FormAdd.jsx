@@ -33,7 +33,7 @@ function FormAdd(props) {
   return (
     <form action="" onSubmit={add}>
       <div className="form-control mt-3">
-        <div className="border-2 border-gray-900 rounded-md">
+        <div className="border-2 border-gray-400 rounded-xl">
           <input type="text" placeholder="title" className="input rounded-b-none focus:ring-0 w-full" onChange={handleChange} name="title" required />
           <textarea className="textarea h-28 max-h-64 focus:ring-0 rounded-t-none w-full" placeholder="Description" name="desc" onChange={handleChange} required></textarea>
         </div>

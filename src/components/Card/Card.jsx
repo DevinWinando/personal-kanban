@@ -19,30 +19,34 @@ function Card(props) {
   };
 
   return (
-    <div className="card bordered h-4/5 mt-10 w-96 ml-10 overflow-y-overlay">
-      <div className="card-body">
+    <div className="card bordered h-4/5 mt-10 w-96 ml-10 ">
+      <div className="card-header px-8 pt-8">
         <h1 className="card-title">{props.title}</h1>
-        <hr className="mb-1" />
-
-        {todos.map((todo) => {
-          if (props.category === todo.category) return <MiniCard activity={todo.title} desc={todo.desc} />;
-          return false;
-        })}
-
-        {props.category === "task" ? (
-          showFormAdd === true ? (
-            ""
-          ) : (
-            <div className="border-2 border-gray-900 rounded-md mt-3 p-4 cursor-pointer" onClick={handleShowFormAdd}>
-              <p className="font-black">+ Add Item</p>
-            </div>
-          )
-        ) : (
-          false
-        )}
-
-        {showFormAdd === true ? <FormAdd setShowFormAdd={setShowFormAdd} /> : false}
+        <hr />
       </div>
+
+      <div className="px-8 mt-3 h-full overflow-y-overlay">
+        {todos.map((todo) => {
+          if (props.category === todo.category) return <MiniCard key={todo.id} id={todo.id} activity={todo.title} desc={todo.desc} />;
+          return "";
+        })}
+      </div>
+
+      {props.category === "task" && showFormAdd === true ? (
+        <div className="card-footer px-8 py-4">
+          <hr />
+          <FormAdd setShowFormAdd={setShowFormAdd} />
+        </div>
+      ) : props.category === "task" ? (
+        <div className="card-footer px-8 py-4">
+          <hr />
+          <div className="border-2 border-gray-400 rounded-xl mt-3 p-4 cursor-pointer" onClick={handleShowFormAdd}>
+            <p className="font-black">+ Add Item</p>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 }
