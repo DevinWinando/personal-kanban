@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import FormAdd from "./FormAdd";
+import FormAdd from "./_FormAdd";
+import MiniCard from "./_MiniCard";
 
 function Card(props) {
   let [showFormAdd, setShowFormAdd] = useState(false);
@@ -18,22 +19,13 @@ function Card(props) {
   };
 
   return (
-    <div className="card bordered h-4/5 mt-10 w-96 ml-10">
+    <div className="card bordered h-4/5 mt-10 w-96 ml-10 overflow-y-overlay">
       <div className="card-body">
         <h1 className="card-title">{props.title}</h1>
         <hr className="mb-1" />
-        {todos.map((todo) => {
-          if (props.category === todo.category)
-            return (
-              <div className="collapse border rounded-md border-base-300 collapse-arrow mt-3" key={todo.title}>
-                <input type="checkbox" />
-                <div className="collapse-title text-xl font-medium">{todo.title}</div>
-                <div className="collapse-content">
-                  <p>{todo.desc}</p>
-                </div>
-              </div>
-            );
 
+        {todos.map((todo) => {
+          if (props.category === todo.category) return <MiniCard activity={todo.title} desc={todo.desc} />;
           return false;
         })}
 
