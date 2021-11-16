@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Menu from "./_Menu";
 
 function MiniCard(props) {
@@ -8,12 +8,8 @@ function MiniCard(props) {
     setShowMenu(true);
   };
 
-  useEffect(() => {
-    document.addEventListener("click", () => {});
-  });
-
   return (
-    <div className="relative">
+    <div className="">
       {showMenu === true ? <Menu setShowMenu={setShowMenu} id={props.id} /> : ""}
 
       <div className="card shadow-2xl lg:card-side bg-dark text-primary-content border-gray-400 border-2 mt-4">

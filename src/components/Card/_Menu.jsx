@@ -1,8 +1,12 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 
 function Menu(props) {
+  const { showMenu, setShowMenu } = props;
+  const idRef = useRef(null);
+  const menuRef = useRef(null);
+
   const handleShowMenu = () => {
-    props.setShowMenu(false);
+    setShowMenu(false);
   };
 
   const handleDelete = () => {
@@ -14,10 +18,22 @@ function Menu(props) {
     localStorage.setItem("personalKanban", JSON.stringify(data));
   };
 
-  const idRef = useRef(null);
+  useEffect(() => {
+    const checkIfClickedOutside = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        handleShowMenu();
+      }
+    };
+
+    document.addEventListener("mousedown", checkIfClickedOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", checkIfClickedOutside);
+    };
+  });
 
   return (
-    <div className="py-4 artboard artboard-demo bg-base-200 absolute z-10 w-56 right-0 menuComponent">
+    <div className="py-4 artboard artboard-demo bg-base-200 absolute z-10 w-56 ml-20 -mt-10" ref={menuRef}>
       <ul className="menu p-4 shadow-lg bg-base-100 rounded-box">
         <li className="menu-title">
           <span>Menu Title</span>
