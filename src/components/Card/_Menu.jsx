@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 
 function Menu(props) {
-  const { setShowMenu } = props;
+  const { setShowMenu, setShowFormEdit } = props;
   const idRef = useRef(null);
   const menuRef = useRef(null);
 
@@ -32,7 +32,9 @@ function Menu(props) {
     };
   });
 
-  const handleShowFormEdit = () => {};
+  const handleShowFormEdit = () => {
+    setShowFormEdit(true);
+  };
 
   return (
     <div className="py-4 artboard artboard-demo bg-base-200 absolute z-10 w-56 ml-20 -mt-10" ref={menuRef}>
