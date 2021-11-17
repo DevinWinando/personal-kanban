@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 
 function Menu(props) {
-  const { showMenu, setShowMenu } = props;
+  const { setShowMenu } = props;
   const idRef = useRef(null);
   const menuRef = useRef(null);
 
@@ -32,6 +32,8 @@ function Menu(props) {
     };
   });
 
+  const handleShowFormEdit = () => {};
+
   return (
     <div className="py-4 artboard artboard-demo bg-base-200 absolute z-10 w-56 ml-20 -mt-10" ref={menuRef}>
       <ul className="menu p-4 shadow-lg bg-base-100 rounded-box">
@@ -39,7 +41,9 @@ function Menu(props) {
           <span>Menu Title</span>
         </li>
         <li>
-          <a href="#">Edit Activity</a>
+          <a href="#" onClick={handleShowFormEdit}>
+            Edit Activity
+          </a>
         </li>
         <li>
           <a href="#">Move to Progress</a>
