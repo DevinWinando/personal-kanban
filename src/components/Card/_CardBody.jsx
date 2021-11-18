@@ -1,20 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
+import Menu from "./_Menu";
 import MiniCard from "./_MiniCard";
 import FormEdit from "./_FormEdit";
 
 function _cardBody(props) {
-  const { todos, category, showFormEdit, setShowFormEdit } = props;
+  const { id, title, desc, category, todoCategory } = props;
+  let [showMenu, setShowMenu] = useState(false);
+  let [showFormEdit, setShowFormEdit] = useState(false);
 
   return (
-    <div className="px-8 mt-3 h-full card-body overflow-y-overlay">
-      {todos.map((todo) => {
-        if (category === todo.category && showFormEdit !== true) {
-          return <MiniCard key={todo.id} id={todo.id} activity={todo.title} desc={todo.desc} setShowFormEdit={setShowFormEdit} />;
-        } else if (category === todo.category && showFormEdit === true) {
-          return <FormEdit />;
+    <div className="wrapper">
+      {showMenu === true ? <Menu setShowMenu={setShowMenu} setShowFormEdit={setShowFormEdit} id={id} /> : ""}
+
+      {(() => {
+        if (category === todoCategory && showFormEdit === true) {
+          return <FormEdit id={id} title={title} desc={desc} todoCategory={todoCategory} setShowMenu={setShowMenu} setShowFormEdit={setShowFormEdit} />;
+        } else if (category === todoCategory) {
+          return <MiniCard id={id} title={title} desc={desc} setShowMenu={setShowMenu} />;
         }
         return "";
-      })}
+      })()}
     </div>
   );
 }

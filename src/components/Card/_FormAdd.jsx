@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 function FormAdd(props) {
+  const { setShowFormAdd } = props;
   let [todos, setTodos] = useState({
     title: "",
     desc: "",
@@ -23,11 +24,11 @@ function FormAdd(props) {
     finalItem.todos.push(todosItem);
 
     localStorage.setItem("personalKanban", JSON.stringify(finalItem));
-    props.setShowFormAdd(false);
+    setShowFormAdd(false);
   };
 
   const handleShowFormAdd = () => {
-    props.setShowFormAdd(false);
+    setShowFormAdd(false);
   };
 
   return (

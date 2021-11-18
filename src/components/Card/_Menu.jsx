@@ -5,19 +5,6 @@ function Menu(props) {
   const idRef = useRef(null);
   const menuRef = useRef(null);
 
-  const handleShowMenu = () => {
-    setShowMenu(false);
-  };
-
-  const handleDelete = () => {
-    const id = parseInt(idRef.current.dataset.id);
-    const data = JSON.parse(localStorage.getItem("personalKanban"));
-    const newTodos = data.todos.filter((data) => data.id !== id);
-    data.todos = newTodos;
-
-    localStorage.setItem("personalKanban", JSON.stringify(data));
-  };
-
   useEffect(() => {
     const checkIfClickedOutside = (e) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
@@ -32,8 +19,19 @@ function Menu(props) {
     };
   });
 
+  const handleDelete = () => {
+    const id = parseInt(idRef.current.dataset.id);
+    const data = JSON.parse(localStorage.getItem("personalKanban"));
+    const newTodos = data.todos.filter((data) => data.id !== id);
+    data.todos = newTodos;
+
+    localStorage.setItem("personalKanban", JSON.stringify(data));
+  };
+
+  const handleShowMenu = () => setShowMenu(false);
   const handleShowFormEdit = () => {
     setShowFormEdit(true);
+    setShowMenu(false);
   };
 
   return (
