@@ -22,7 +22,7 @@ function Card(props) {
         {todos.map((todo) => {
           const { id, title, desc } = todo;
 
-          return <CardBody key={id} id={id} title={title} desc={desc} category={category} todoCategory={todo.category} />;
+          return <CardBody key={title} id={id} title={title} desc={desc} category={category} todoCategory={todo.category} />;
         })}
       </div>
       {category === "task" ? <CardFooter /> : ""}
