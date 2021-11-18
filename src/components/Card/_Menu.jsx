@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 
 function Menu(props) {
-  const { setShowMenu, setShowFormEdit } = props;
+  const { id, setShowMenu, setShowFormEdit } = props;
   const idRef = useRef(null);
   const menuRef = useRef(null);
 
@@ -20,10 +20,17 @@ function Menu(props) {
   });
 
   const handleDelete = () => {
-    const id = parseInt(idRef.current.dataset.id);
     const data = JSON.parse(localStorage.getItem("personalKanban"));
     const newTodos = data.todos.filter((data) => data.id !== id);
     data.todos = newTodos;
+
+    localStorage.setItem("personalKanban", JSON.stringify(data));
+  };
+
+  const move = () => {
+    const data = JSON.parse(localStorage.getItem("personalKanban"));
+    const index = data.todos.findIndex((todo) => todo.id === id);
+    data.todos[index].category = "progress";
 
     localStorage.setItem("personalKanban", JSON.stringify(data));
   };
@@ -46,10 +53,12 @@ function Menu(props) {
           </a>
         </li>
         <li>
-          <a href="#">Move to Progress</a>
+          <a href="#" onClick={move}>
+            Move to Progress
+          </a>
         </li>
         <li>
-          <a href="#" onClick={handleDelete} data-id={props.id} ref={idRef}>
+          <a href="" onClick={handleDelete} data-id={props.id} ref={idRef}>
             Delete Task
           </a>
         </li>
