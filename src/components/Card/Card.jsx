@@ -4,7 +4,7 @@ import CardBody from "./_CardBody";
 import CardFooter from "./_CardFooter";
 
 function Card(props) {
-  const { category, title } = props;
+  const { category, title, index } = props;
 
   let [todos, setTodos] = useState([]);
 
@@ -23,10 +23,11 @@ function Card(props) {
         {todos.map((todo) => {
           const { id, title, desc } = todo;
 
-          return <CardBody key={id} id={id} title={title} desc={desc} category={category} todoCategory={todo.category} />;
+          return <CardBody key={id} id={id} title={title} desc={desc} index={index} category={category} todoCategory={todo.category} />;
         })}
       </div>
       {category === "task" ? <CardFooter /> : ""}
+      {props.children}
     </div>
   );
 }
