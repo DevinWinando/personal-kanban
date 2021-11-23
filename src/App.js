@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import Card from "./components/Card/Card";
 import { DragDropContext } from "react-beautiful-dnd";
 import React, { useReducer, useEffect } from "react";
@@ -6,46 +7,9 @@ export const ActivityContext = React.createContext();
 
 const initialState = {
   activity: {
-    id: 1,
-    name: "Learn React",
-    todos: [
-      {
-        id: 1,
-        name: "Learn Javascript",
-        desc: "Learn basic about Javascript",
-      },
-      {
-        id: 2,
-        name: "Learn Basic ReactJS",
-        desc: "Learn basic about reactJS",
-      },
-      {
-        id: 3,
-        name: "Make Something",
-        desc: "Make a beautiful project to train my basic ReactJS",
-      },
-    ],
+    todos: [],
   },
-  board: [
-    {
-      id: 1,
-      title: "Task",
-      category: "task",
-      todosId: [1, 2, 3],
-    },
-    {
-      id: 2,
-      title: "In Progress",
-      category: "progress",
-      todosId: [],
-    },
-    {
-      id: 3,
-      title: "Done",
-      category: "done",
-      todosId: [],
-    },
-  ],
+  board: [],
 };
 
 const reducer = (prevState, updatedProperty) => ({
@@ -56,11 +20,15 @@ const reducer = (prevState, updatedProperty) => ({
 function App() {
   const [state, setState] = useReducer(reducer, initialState);
 
-  // useEffect(() => {
-  //   const activity = JSON.parse(localStorage.getItem("personalKanban"));
-  //   console.log(activity);
-  //   setActivity(activity);
-  // }, []);
+  useEffect(() => {
+    const activity = JSON.parse(localStorage.getItem("personalKanban"));
+    console.log(activity);
+    setState(activity);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("personalKanban", JSON.stringify(state));
+  }, [state]);
 
   const onDragEnd = (result) => {
     const { destination, source, draggableId } = result;
@@ -73,7 +41,6 @@ function App() {
       return;
     }
 
-    // eslint-disable-next-line eqeqeq
     const oldBoardIndex = state.board.findIndex((board) => board.id == source.droppableId);
     const newBoardIndex = state.board.findIndex((board) => board.id == destination.droppableId);
     const board = state.board;
@@ -96,11 +63,6 @@ function App() {
     };
 
     setState(newState);
-    // console.log(board);
-    // console.log(newBoard);
-    // console.log(newState);
-    // console.log(result);
-    // console.log(result);
   };
 
   return (
