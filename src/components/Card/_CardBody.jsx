@@ -5,7 +5,7 @@ import FormEdit from "./_FormEdit";
 import { Draggable } from "react-beautiful-dnd";
 
 function _cardBody(props) {
-  const { id, index, title, desc, category, todoCategory } = props;
+  const { id, index, name, desc, todoCategory } = props;
   let [showMenu, setShowMenu] = useState(false);
   let [showFormEdit, setShowFormEdit] = useState(false);
 
@@ -13,16 +13,15 @@ function _cardBody(props) {
     <Draggable draggableId={id.toString()} index={index}>
       {(provided) => {
         return (
-          <div className="wrapper" ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+          <div className="wrapper" ref={provided.innerRef} {...provided.dragHandleProps} {...provided.draggableProps}>
             {showMenu === true ? <Menu setShowMenu={setShowMenu} setShowFormEdit={setShowFormEdit} id={id} /> : ""}
 
             {(() => {
-              if (category === todoCategory && showFormEdit === true) {
-                return <FormEdit id={id} title={title} desc={desc} todoCategory={todoCategory} setShowMenu={setShowMenu} setShowFormEdit={setShowFormEdit} />;
-              } else if (category === todoCategory) {
-                return <MiniCard id={id} title={title} desc={desc} setShowMenu={setShowMenu} />;
+              if (showFormEdit === true) {
+                return <FormEdit id={id} name={name} desc={desc} todoCategory={todoCategory} setShowMenu={setShowMenu} setShowFormEdit={setShowFormEdit} />;
+              } else {
+                return <MiniCard id={id} name={name} desc={desc} setShowMenu={setShowMenu} />;
               }
-              return "";
             })()}
           </div>
         );

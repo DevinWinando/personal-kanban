@@ -1,42 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import CardHeader from "./_CardHeader";
 import CardBody from "./_CardBody";
 import CardFooter from "./_CardFooter";
 import { Droppable } from "react-beautiful-dnd";
 
 function Card(props) {
-  const { category, title } = props;
-
-  let [todos, setTodos] = useState([]);
-
-  useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("personalKanban"));
-    const todos = data.todos;
-
-    setTodos(todos);
-    console.log(data);
-  }, []);
+  const { title, id, todos, category } = props;
 
   return (
-    <div className="div">
-      <Droppable droppableId={category}>
+    <div className="card bordered h-4/5 mt-10 w-96 ml-10 static">
+      <CardHeader title={title} />
+      <Droppable droppableId={id.toString()}>
         {(provided) => {
           return (
-            <div className="card bordered h-4/5 mt-10 w-96 ml-10 static" ref={provided.innerRef} {...provided.droppableProps}>
-              <CardHeader title={title} />
-              <div className="px-8 h-full card-body overflow-y-overlay">
-                {todos.map((todo, index) => {
-                  const { id, title, desc } = todo;
-
-                  return <CardBody key={id} id={id} index={index} title={title} desc={desc} category={category} todoCategory={todo.category} />;
-                })}
-              </div>
-              {category === "task" ? <CardFooter /> : ""}
+            <div className="px-8 p-0 mt-2 h-full card-body overflow-y-overlay" ref={provided.innerRef} {...provided.droppableProps}>
+              {todos.map((todos, index) => {
+                return <CardBody key={todos.id} id={todos.id} index={index} name={todos.name} desc={todos.desc} />;
+              })}
               {provided.placeholder}
             </div>
           );
         }}
       </Droppable>
+      {category === "task" ? <CardFooter /> : ""}
     </div>
   );
 }
