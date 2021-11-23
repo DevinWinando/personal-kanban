@@ -3,7 +3,7 @@ import Card from "./components/Card/Card";
 import { DragDropContext } from "react-beautiful-dnd";
 import React, { useReducer, useEffect } from "react";
 
-export const ActivityContext = React.createContext();
+export const StateContext = React.createContext();
 
 const initialState = {
   activity: {
@@ -22,7 +22,6 @@ function App() {
 
   useEffect(() => {
     const activity = JSON.parse(localStorage.getItem("personalKanban"));
-    console.log(activity);
     setState(activity);
   }, []);
 
@@ -67,7 +66,7 @@ function App() {
 
   return (
     <DragDropContext onDragEnd={onDragEnd} type="card">
-      <ActivityContext.Provider value={{ State: state, Dispatch: setState }}>
+      <StateContext.Provider value={{ state: state, setState: setState }}>
         <div className="h-screen flex container">
           {state.board.length !== 0
             ? state.board.map((board) => {
@@ -81,7 +80,7 @@ function App() {
               })
             : ""}
         </div>
-      </ActivityContext.Provider>
+      </StateContext.Provider>
     </DragDropContext>
   );
 }
