@@ -1,9 +1,11 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useContext } from "react";
+import { StateContext } from "../../App";
 
 function Menu(props) {
   const { id, setShowMenu, setShowFormEdit } = props;
   const idRef = useRef(null);
   const menuRef = useRef(null);
+  const stateContext = useContext(StateContext);
 
   useEffect(() => {
     const checkIfClickedOutside = (e) => {
@@ -20,20 +22,25 @@ function Menu(props) {
   });
 
   const handleDelete = () => {
-    const data = JSON.parse(localStorage.getItem("personalKanban"));
-    const newTodos = data.todos.filter((data) => data.id !== id);
-    data.todos = newTodos;
+    const newState = { ...stateContext.state };
+    const newTodos = newState.todos.filter((data) => data.id !== id);
+    const boardIndex = newState.board.findIndex((board) => board.todosId.includes(id));
+    const newBoard = newState.board[boardIndex].todosId.filter((data) => data !== id);
 
-    localStorage.setItem("personalKanban", JSON.stringify(data));
+    newState.todos = newTodos;
+    newState.board[boardIndex].todosId = newBoard;
+
+    stateContext.setState(newState);
+    handleShowMenu();
   };
 
-  const move = () => {
-    const data = JSON.parse(localStorage.getItem("personalKanban"));
-    const index = data.todos.findIndex((todo) => todo.id === id);
-    data.todos[index].category = "progress";
+  // const move = () => {
+  //   const data = state.activity;
+  //   const index = data.todos.findIndex((todo) => todo.id === id);
+  //   data.todos[index].category = "progress";
 
-    localStorage.setItem("personalKanban", JSON.stringify(data));
-  };
+  //   localStorage.setItem("personalKanban", JSON.stringify(data));
+  // };
 
   const handleShowMenu = () => setShowMenu(false);
   const handleShowFormEdit = () => {
@@ -53,12 +60,10 @@ function Menu(props) {
           </a>
         </li>
         <li>
-          <a href="#" onClick={move}>
-            Move to Progress
-          </a>
+          <a href="#">Move to Progress</a>
         </li>
         <li>
-          <a href="" onClick={handleDelete} data-id={props.id} ref={idRef}>
+          <a href="#" onClick={handleDelete} data-id={props.id} ref={idRef}>
             Delete Task
           </a>
         </li>

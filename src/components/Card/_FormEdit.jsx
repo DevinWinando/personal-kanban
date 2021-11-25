@@ -14,12 +14,11 @@ function _FormEdit(props) {
 
   const edit = (e) => {
     e.preventDefault();
-    const data = stateContext.state.activity;
+    const data = stateContext.state;
     const todosData = data.todos;
     const index = todosData.findIndex((todo) => todo.id === id);
     data.todos[index] = todos;
 
-    // localStorage.setItem("personalKanban", JSON.stringify(data));
     stateContext.setState(data);
     handleShowFormEdit();
   };

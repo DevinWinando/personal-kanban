@@ -1,24 +1,46 @@
 {
-  "name": "projectOne",
   "id": 1,
+  "name": "Learn React",
   "todos": [
     {
+      "name": "asd",
+      "desc": "asd",
+      "id": 4
+    },
+    {
       "id": 1,
-      "title": "title1",
-      "desc": "desc1",
-      "category": "task"
+      "name": "Updated Learn Javascript",
+      "desc": "Learn basic about Javascript"
     },
     {
       "id": 2,
-      "title": "title 2",
-      "desc": "desc 2",
-      "category": "task"
+      "name": "Learn Basic ReactJS",
+      "desc": "Learn basic about reactJS"
     },
     {
       "id": 3,
-      "title": "title 3",
-      "desc": "desc 3",
-      "category": "task"
+      "name": "Make Something",
+      "desc": "Make a beautiful project to train my basic ReactJS"
+    }
+  ],
+  "board": [
+    {
+      "id": 1,
+      "title": "Task",
+      "category": "task",
+      "todosId": [4, 1, 2, 3]
+    },
+    {
+      "id": 2,
+      "title": "In Progress",
+      "category": "progress",
+      "todosId": []
+    },
+    {
+      "id": 3,
+      "title": "Done",
+      "category": "done",
+      "todosId": []
     }
   ]
 }

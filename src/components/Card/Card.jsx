@@ -13,7 +13,7 @@ function Card(props) {
       <Droppable droppableId={id.toString()}>
         {(provided) => {
           return (
-            <div className="px-8 p-0 mt-2 h-full card-body overflow-y-overlay" ref={provided.innerRef} {...provided.droppableProps}>
+            <div className="px-8 p-0 my-2 h-full card-body overflow-y-overlay" ref={provided.innerRef} {...provided.droppableProps}>
               {todos.map((todos, index) => {
                 return <CardBody key={todos.id} id={todos.id} index={index} name={todos.name} desc={todos.desc} />;
               })}

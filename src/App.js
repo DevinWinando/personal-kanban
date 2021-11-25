@@ -6,9 +6,7 @@ import React, { useReducer, useEffect } from "react";
 export const StateContext = React.createContext();
 
 const initialState = {
-  activity: {
-    todos: [],
-  },
+  todos: [],
   board: [],
 };
 
@@ -23,9 +21,11 @@ function App() {
   useEffect(() => {
     const activity = JSON.parse(localStorage.getItem("personalKanban"));
     setState(activity);
+    console.log(activity);
   }, []);
 
   useEffect(() => {
+    console.log(state);
     localStorage.setItem("personalKanban", JSON.stringify(state));
   }, [state]);
 
@@ -42,9 +42,8 @@ function App() {
 
     const oldBoardIndex = state.board.findIndex((board) => board.id == source.droppableId);
     const newBoardIndex = state.board.findIndex((board) => board.id == destination.droppableId);
-    const board = state.board;
-    const oldUpdatedBoard = board[oldBoardIndex];
-    const newUpdatedBoard = board[newBoardIndex];
+    const oldUpdatedBoard = state.board[oldBoardIndex];
+    const newUpdatedBoard = state.board[newBoardIndex];
     const newTodosIds = newUpdatedBoard.todosId;
     oldUpdatedBoard.todosId.splice(source.index, 1);
     newTodosIds.splice(destination.index, 0, +draggableId);
@@ -70,11 +69,12 @@ function App() {
         <div className="h-screen flex container">
           {state.board.length !== 0
             ? state.board.map((board) => {
-                const todos = board.todosId.map((i) => state.activity.todos.find((j) => j.id === i));
+                // Mengurutkan ID todos dengan urutan todos Id pada board
+                const todos = board.todosId.map((boardTodosId) => state.todos.find((todos) => todos.id === boardTodosId));
 
-                state.activity.todos.sort(function (a, b) {
-                  return board.todosId.indexOf(a.id) - board.todosId.indexOf(b.id);
-                });
+                // state.todos.sort(function (a, b) {
+                //   return board.todosId.indexOf(a.id) - board.todosId.indexOf(b.id);
+                // });
 
                 return <Card key={board.id} id={board.id} todos={todos} title={board.title} category={board.category} />;
               })

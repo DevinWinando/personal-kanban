@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { StateContext } from "../../App";
 
 function FormAdd(props) {
   const { setShowFormAdd } = props;
+  const stateContext = useContext(StateContext);
+
   let [todos, setTodos] = useState({
-    title: "",
+    id: "",
+    name: "",
     desc: "",
-    category: "task",
   });
 
   const handleChange = (e) => {
@@ -18,13 +21,21 @@ function FormAdd(props) {
 
   const add = (e) => {
     e.preventDefault();
-    const todosItem = todos;
+    const newState = stateContext.state;
+    const boardTodosId = newState.board[0].todosId;
+    const prevId = newState.todos.map((todos) => todos.id);
+    const id = prevId.reduce((a, b) => Math.max(a, b)) + 1;
 
-    const finalItem = JSON.parse(localStorage.getItem("personalKanban"));
-    finalItem.todos.push(todosItem);
+    boardTodosId.unshift(id);
+    todos.id = id;
+    newState.todos.push(todos);
 
-    localStorage.setItem("personalKanban", JSON.stringify(finalItem));
+    // console.log(newState);
+
+    stateContext.setState(newState);
     setShowFormAdd(false);
+    // console.log(stateContext.state);
+    // console.log(todos);
   };
 
   const handleShowFormAdd = () => {
