@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { StateContext } from "../../App";
+import { StateContext } from "../../pages/Activity";
 
 function FormAdd(props) {
   const { setShowFormAdd } = props;

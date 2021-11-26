@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useContext } from "react";
-import { StateContext } from "../../App";
+import { StateContext } from "../../pages/Activity";
 
 function Menu(props) {
   const { id, setShowMenu, setShowFormEdit } = props;
@@ -55,20 +55,20 @@ function Menu(props) {
           <span>Menu Title</span>
         </li>
         <li>
-          <a href="#" onClick={handleShowFormEdit}>
+          <a href="asd" onClick={handleShowFormEdit}>
             Edit Activity
           </a>
         </li>
         <li>
-          <a href="#">Move to Progress</a>
+          <a href="asd">Move to Progress</a>
         </li>
         <li>
-          <a href="#" onClick={handleDelete} data-id={props.id} ref={idRef}>
+          <a href="asd" onClick={handleDelete} data-id={props.id} ref={idRef}>
             Delete Task
           </a>
         </li>
         <li>
-          <a onClick={handleShowMenu} href="#">
+          <a onClick={handleShowMenu} href="asd">
             Cancel
           </a>
         </li>
