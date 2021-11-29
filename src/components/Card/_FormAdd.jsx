@@ -1,12 +1,13 @@
 import React, { useState, useContext } from "react";
 import { StateContext } from "../../pages/Activity";
+import { getId } from "../../function";
 
 function FormAdd(props) {
   const { setShowFormAdd } = props;
   const stateContext = useContext(StateContext);
 
-  let [todos, setTodos] = useState({
-    id: "",
+  const [todos, setTodos] = useState({
+    id: 1,
     name: "",
     desc: "",
   });
@@ -24,18 +25,14 @@ function FormAdd(props) {
     const newState = stateContext.state;
     const boardTodosId = newState.board[0].todosId;
     const prevId = newState.todos.map((todos) => todos.id);
-    const id = prevId.reduce((a, b) => Math.max(a, b)) + 1;
+    const id = getId(prevId);
 
     boardTodosId.unshift(id);
     todos.id = id;
     newState.todos.push(todos);
 
-    // console.log(newState);
-
     stateContext.setState(newState);
     setShowFormAdd(false);
-    // console.log(stateContext.state);
-    // console.log(todos);
   };
 
   const handleShowFormAdd = () => {
@@ -46,7 +43,7 @@ function FormAdd(props) {
     <form action="" onSubmit={add}>
       <div className="form-control mt-3">
         <div className="border-2 border-gray-400 rounded-xl">
-          <input type="text" placeholder="title" className="input rounded-b-none focus:ring-0 w-full" onChange={handleChange} name="title" required />
+          <input type="text" placeholder="title" className="input rounded-b-none focus:ring-0 w-full" onChange={handleChange} name="name" required />
           <textarea className="textarea h-28 max-h-64 focus:ring-0 rounded-t-none w-full" placeholder="Description" name="desc" onChange={handleChange} required></textarea>
         </div>
         <div className="d-flex">

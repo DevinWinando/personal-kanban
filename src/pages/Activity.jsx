@@ -1,11 +1,15 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable eqeqeq */
 import React, { useEffect, useReducer } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import Card from "../components/Card/Card";
+import { useParams } from "react-router-dom";
 
 export const StateContext = React.createContext();
 
 const initialState = {
+  id: 1,
+  name: "",
   todos: [],
   board: [],
 };
@@ -16,17 +20,16 @@ const reducer = (prevState, updatedProperty) => ({
 });
 
 function Activity() {
+  let params = useParams();
   const [state, setState] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    const activity = JSON.parse(localStorage.getItem("personalKanban"));
+    const activity = JSON.parse(localStorage.getItem(`${params.activityId}`));
     setState(activity);
-    console.log(activity);
   }, []);
 
   useEffect(() => {
-    console.log(state);
-    localStorage.setItem("personalKanban", JSON.stringify(state));
+    localStorage.setItem(`${params.activityId}`, JSON.stringify(state));
   }, [state]);
 
   const onDragEnd = (result) => {

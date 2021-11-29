@@ -8,8 +8,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Index />} exact />
-        <Route path="activities/:activityId" element={<Test />} />
+        <Route path="/" element={<Test />} exact />
+        <Route path="activities/:activityId" element={<Activity />} />
       </Routes>
     </Router>
   );

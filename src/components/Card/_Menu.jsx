@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useRef, useEffect, useContext } from "react";
 import { StateContext } from "../../pages/Activity";
 
@@ -55,20 +56,20 @@ function Menu(props) {
           <span>Menu Title</span>
         </li>
         <li>
-          <a href="asd" onClick={handleShowFormEdit}>
+          <a href="#" onClick={handleShowFormEdit}>
             Edit Activity
           </a>
         </li>
         <li>
-          <a href="asd">Move to Progress</a>
+          <a href="#">Move to Progress</a>
         </li>
         <li>
-          <a href="asd" onClick={handleDelete} data-id={props.id} ref={idRef}>
+          <a href="#" onClick={handleDelete} data-id={props.id} ref={idRef}>
             Delete Task
           </a>
         </li>
         <li>
-          <a onClick={handleShowMenu} href="asd">
+          <a onClick={handleShowMenu} href="#">
             Cancel
           </a>
         </li>
