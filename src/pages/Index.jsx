@@ -1,11 +1,20 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { usePopper } from "react-popper";
 import Data from "../Data";
+import { Link } from "react-router-dom";
 import { getId } from "../function";
 
 function Index() {
   const data = Data();
   const [showFormAdd, setShowFormAdd] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
+  const [buttonRef, setButtonRef] = useState();
+  const [menuRef, setMenuRef] = useState();
+  const { styles, attributes } = usePopper(buttonRef, menuRef, {
+    placement: "right",
+  });
+
   const [activity, setActivity] = useState({
     id: 1,
     name: "",
@@ -58,17 +67,45 @@ function Index() {
   return (
     <div className="h-screen w-screen flex flex-col justify-center items-center">
       <h1>HOME</h1>
-      {data.map((data) => (
-        <Link style={{ display: "block", margin: "1rem 0" }} to={`/activities/${data.id}`} key={data.id}>
-          <div className="card shadow-2xl lg:card-side bg-dark text-primary-content border-gray-400 border-2 mt-4">
+      <div className="grid grid-cols-5 gap-4">
+        {data.map((data) => (
+          <div key={data.id} className="card static shadow-2xl lg:card-side bg-dark text-primary-content border-gray-400 border-2 mt-4">
             <div className="card-body">
               <div className="card-title flex justify-between">
-                <h1>{data.name}</h1>
+                <Link style={{ display: "block", margin: "1rem 0" }} to={`/activities/${data.id}`}>
+                  <h1>{data.name}</h1>
+                </Link>
+                <button onClick={() => setShowMenu(!showMenu)} ref={setButtonRef} className="px-4">
+                  :
+                </button>
               </div>
             </div>
+            {showMenu ? (
+              <div className="py-4 artboard artboard-demo absolute z-10 bg-base-200 w-56" ref={setMenuRef} style={styles.popper} {...attributes.popper}>
+                <ul className="menu p-4 shadow-lg bg-base-100 rounded-box">
+                  <li className="menu-title">
+                    <span>Menu Title</span>
+                  </li>
+                  <li>
+                    <a href="#">Edit Activity</a>
+                  </li>
+                  <li>
+                    <a href="#">Move to Progress</a>
+                  </li>
+                  <li>
+                    <a href="#">Delete Task</a>
+                  </li>
+                  <li>
+                    <a href="#">Cancel</a>
+                  </li>
+                </ul>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
-        </Link>
-      ))}
+        ))}
+      </div>
       {showFormAdd === true ? (
         <form action="" onSubmit={add}>
           <div className="form-control mt-40">

@@ -16,7 +16,7 @@ function _cardBody(props) {
               if (showFormEdit === true) {
                 return <FormEdit id={id} name={name} desc={desc} todoCategory={todoCategory} setShowFormEdit={setShowFormEdit} />;
               } else {
-                return <MiniCard id={id} name={name} desc={desc} />;
+                return <MiniCard id={id} name={name} desc={desc} setShowFormEdit={setShowFormEdit} />;
               }
             })()}
           </div>

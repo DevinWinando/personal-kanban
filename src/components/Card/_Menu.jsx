@@ -50,7 +50,7 @@ function Menu(props) {
   };
 
   return (
-    <div className="py-4 artboard artboard-demo bg-base-200 absolute z-10 w-56 ml-20 -mt-10" ref={menuRef}>
+    <div className="py-4 artboard artboard-demo bg-base-200 w-56" ref={menuRef}>
       <ul className="menu p-4 shadow-lg bg-base-100 rounded-box">
         <li className="menu-title">
           <span>Menu Title</span>
