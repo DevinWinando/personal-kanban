@@ -3,10 +3,8 @@ import { StateContext } from "../../pages/Activity";
 
 function _FormEdit(props) {
   const { setShowFormEdit, id, name, desc } = props;
-
   const stateContext = useContext(StateContext);
-
-  let [todos, setTodos] = useState({
+  const [todos, setTodos] = useState({
     id: id,
     name: name,
     desc: desc,

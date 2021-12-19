@@ -4,17 +4,17 @@ import { usePopper } from "react-popper";
 import Data from "../Data";
 import { Link } from "react-router-dom";
 import { getId } from "../function";
+import Minicard from "../components/Minicard/Minicard";
+import MinicardHeader from "../components/Minicard/MinicardHeader";
+import Menu from "../components/Menu/Menu";
+import MenuList from "../components/Menu/MenuList";
+import Form from "../components/Form/Form";
+import Textarea from "../components/Form/Textarea";
 
 function Index() {
-  const data = Data();
+  const localStorageData = Data();
   const [showFormAdd, setShowFormAdd] = useState(false);
-  const [showMenu, setShowMenu] = useState(false);
-  const [buttonRef, setButtonRef] = useState();
-  const [menuRef, setMenuRef] = useState();
-  const { styles, attributes } = usePopper(buttonRef, menuRef, {
-    placement: "right",
-  });
-
+  const [allActivity, setAllActivity] = useState(localStorageData);
   const [activity, setActivity] = useState({
     id: 1,
     name: "",
@@ -51,11 +51,13 @@ function Index() {
 
   const add = (e) => {
     e.preventDefault();
-    const dataLocalStorage = data;
-    const prevId = dataLocalStorage.map((data) => data.id);
+    const newAllActivity = allActivity;
+    const prevId = newAllActivity.map((data) => data.id);
     const id = getId(prevId);
     activity.id = id;
+    newAllActivity.push(activity);
 
+    setAllActivity(newAllActivity);
     localStorage.setItem(`${id}`, JSON.stringify(activity));
     setShowFormAdd(false);
   };
@@ -68,66 +70,96 @@ function Index() {
     <div className="h-screen w-screen flex flex-col justify-center items-center">
       <h1>HOME</h1>
       <div className="grid grid-cols-5 gap-4">
-        {data.map((data) => (
-          <div key={data.id} className="card static shadow-2xl lg:card-side bg-dark text-primary-content border-gray-400 border-2 mt-4">
-            <div className="card-body">
-              <div className="card-title flex justify-between">
-                <Link style={{ display: "block", margin: "1rem 0" }} to={`/activities/${data.id}`}>
-                  <h1>{data.name}</h1>
-                </Link>
-                <button onClick={() => setShowMenu(!showMenu)} ref={setButtonRef} className="px-4">
-                  :
-                </button>
-              </div>
-            </div>
-            {showMenu ? (
-              <div className="py-4 artboard artboard-demo absolute z-10 bg-base-200 w-56" ref={setMenuRef} style={styles.popper} {...attributes.popper}>
-                <ul className="menu p-4 shadow-lg bg-base-100 rounded-box">
-                  <li className="menu-title">
-                    <span>Menu Title</span>
-                  </li>
-                  <li>
-                    <a href="#">Edit Activity</a>
-                  </li>
-                  <li>
-                    <a href="#">Move to Progress</a>
-                  </li>
-                  <li>
-                    <a href="#">Delete Task</a>
-                  </li>
-                  <li>
-                    <a href="#">Cancel</a>
-                  </li>
-                </ul>
-              </div>
-            ) : (
-              ""
-            )}
+        {showFormAdd === true ? (
+          <Form cancel={handleShowFormAdd} onSubmit={add}>
+            <Textarea placeholder="What are you going to do?" name="name" onChange={handleChange} />
+          </Form>
+        ) : (
+          <div className="h-36 flex border-dashed justify-center items-center border-gray-400 border-2 mt-4 card rounded-xl cursor-pointer" onClick={handleShowFormAdd}>
+            <h2 className="font-bold text-lg">+ ADD ACTIVITY</h2>
           </div>
+        )}
+        {allActivity.map((data) => (
+          <Minicards key={data.id} data={data} allActivity={allActivity} setAllActivity={setAllActivity} />
         ))}
       </div>
-      {showFormAdd === true ? (
-        <form action="" onSubmit={add}>
-          <div className="form-control mt-40">
-            <div className="border-2 border-gray-400 rounded-xl">
-              <input type="text" autoComplete="off" placeholder="What are you going to do?" className="input rounded-b-none focus:ring-0 w-full" onChange={handleChange} name="name" required />
-            </div>
-            <div className="d-flex">
-              <button className="btn btn-active w-1/4 mt-3 mr-3" aria-pressed="true" type="submit">
-                Save
-              </button>
-              <button className="btn btn-active btn-secondary w-1/4 mt-3" aria-pressed="true" onClick={handleShowFormAdd}>
-                Cancel
-              </button>
-            </div>
-          </div>
-        </form>
-      ) : (
-        <div className="border-2 border-gray-400 rounded-xl mt-3 p-4 cursor-pointer" onClick={handleShowFormAdd}>
-          <p className="font-black">+ Add Item</p>
-        </div>
-      )}
     </div>
+  );
+}
+
+function Minicards(props) {
+  const { data, allActivity, setAllActivity } = props;
+  const [showMenu, setShowMenu] = useState(false);
+  const [showFormEdit, setShowFormEdit] = useState(false);
+  const [buttonRef, setButtonRef] = useState();
+  const [menuRef, setMenuRef] = useState();
+  const [activity, setActivity] = useState(data);
+  const { styles, attributes } = usePopper(buttonRef, menuRef, {
+    placement: "auto",
+  });
+
+  const handleShowMenu = () => setShowMenu(!showMenu);
+
+  const handleShowFormEdit = () => {
+    setShowFormEdit(true);
+    setShowMenu(false);
+  };
+
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    const newActivity = activity;
+    const index = allActivity.findIndex((allActivity) => allActivity.id === activity.id);
+    allActivity[index] = newActivity;
+
+    localStorage.setItem(`${activity.id}`, JSON.stringify(newActivity));
+    setShowFormEdit(false);
+  };
+
+  const handleChange = (e) => {
+    const newActivity = activity;
+    let name = e.target.name;
+    let value = e.target.value;
+    newActivity[name] = value;
+
+    setActivity(newActivity);
+  };
+
+  const handleDelete = () => {
+    const newActivity = allActivity.filter((data) => data.id !== activity.id);
+    setAllActivity(newActivity);
+
+    localStorage.removeItem(activity.id);
+  };
+
+  return (
+    <>
+      {showFormEdit ? (
+        <Form cancel={() => setShowFormEdit(false)} onSubmit={handleUpdate}>
+          <Textarea placeholder="Activity" defaultValue={props.data.name} name="name" onChange={handleChange} />
+        </Form>
+      ) : (
+        <Minicard>
+          <Link style={{ display: "block", margin: "1rem 0" }} to={`/activities/${props.data.id}`}>
+            <MinicardHeader title={props.data.name} />
+          </Link>
+          <button onClick={handleShowMenu} ref={setButtonRef} className="px-4 absolute top-0 right-0 mt-4 mr-2">
+            :
+          </button>
+        </Minicard>
+      )}
+
+      {showMenu ? (
+        <div className="z-10" ref={setMenuRef} style={styles.popper} {...attributes.popper}>
+          <Menu title="Menu" setShowMenu={setShowMenu}>
+            <MenuList content="Edit Activiy" onClick={handleShowFormEdit}></MenuList>
+            <MenuList content="Delete Activity" onClick={handleDelete}></MenuList>
+            <MenuList content="Cancel" onClick={handleShowMenu}></MenuList>
+          </Menu>
+        </div>
+      ) : (
+        ""
+      )}
+    </>
   );
 }
 

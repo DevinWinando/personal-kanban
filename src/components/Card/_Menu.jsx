@@ -4,7 +4,6 @@ import { StateContext } from "../../pages/Activity";
 
 function Menu(props) {
   const { id, setShowMenu, setShowFormEdit } = props;
-  const idRef = useRef(null);
   const menuRef = useRef(null);
   const stateContext = useContext(StateContext);
 
@@ -57,14 +56,14 @@ function Menu(props) {
         </li>
         <li>
           <a href="#" onClick={handleShowFormEdit}>
-            Edit Activity
+            Edit Task
           </a>
         </li>
         <li>
           <a href="#">Move to Progress</a>
         </li>
         <li>
-          <a href="#" onClick={handleDelete} data-id={props.id} ref={idRef}>
+          <a href="#" onClick={handleDelete}>
             Delete Task
           </a>
         </li>
