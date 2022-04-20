@@ -15,18 +15,6 @@ function ActivityContainer() {
     board: [],
   });
 
-  const [addState, setAddState] = useState({
-    id: 1,
-    name: "",
-    desc: "",
-  });
-
-  const [updateState, setUpdateState] = useState({
-    id: 1,
-    name: "",
-    desc: "",
-  });
-
   useEffect(() => {
     const activity = JSON.parse(localStorage.getItem(`${params.activityId}`));
     setState(activity);
@@ -37,8 +25,7 @@ function ActivityContainer() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
-  const handleAdd = (e) => {
-    e.preventDefault();
+  const handleAdd = (addState, setAddState) => {
     const newState = { ...state };
     const boardTodosId = newState.board[0].todosId;
     const prevId = newState.todos.map((todos) => todos.id);
@@ -64,20 +51,13 @@ function ActivityContainer() {
     setState(newState);
   };
 
-  const handleUpdate = (e, id) => {
-    e.preventDefault();
+  const handleUpdate = (id, updateState) => {
     const newState = { ...state };
     const todosData = newState.todos;
     const index = todosData.findIndex((todo) => todo.id === id);
     newState.todos[index] = updateState;
 
-    console.log(newState.todos[index]);
-    console.log(id);
-    console.log(index);
-    console.log(newState);
-    console.log(updateState);
-
-    // setState(newState);
+    setState(newState);
   };
 
   const onDragEnd = (result) => {
@@ -116,20 +96,7 @@ function ActivityContainer() {
     setState(newState);
   };
 
-  return (
-    <ActivityView
-      onDragEnd={onDragEnd}
-      handleAdd={handleAdd}
-      handleUpdate={handleUpdate}
-      handleDelete={handleDelete}
-      state={state}
-      setState={setState}
-      addState={addState}
-      setAddState={setAddState}
-      updateState={updateState}
-      setUpdateState={setUpdateState}
-    />
-  );
+  return <ActivityView onDragEnd={onDragEnd} handleAdd={handleAdd} handleUpdate={handleUpdate} handleDelete={handleDelete} state={state} setState={setState} />;
 }
 
 export default ActivityContainer;

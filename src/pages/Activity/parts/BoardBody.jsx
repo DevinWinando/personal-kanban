@@ -13,12 +13,19 @@ import Input from "../../../components/Form/Input";
 import { handleChange } from "../../../helpers/function";
 
 function BoardBody(props) {
-  const { id, index, name, desc, handleDelete, handleUpdate, updateState, setUpdateState } = props;
+  const { id, index, name, desc, handleDelete, handleUpdate } = props;
 
   const [showFormEdit, setShowFormEdit] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [buttonRef, setButtonRef] = useState();
   const [menuRef, setMenuRef] = useState();
+
+  const [updateState, setUpdateState] = useState({
+    id,
+    name,
+    desc,
+  });
+
   const { styles, attributes } = usePopper(buttonRef, menuRef, {
     placement: "auto",
   });
@@ -28,31 +35,23 @@ function BoardBody(props) {
     setShowMenu(false);
   };
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+    handleUpdate(id, updateState);
+    setShowFormEdit(false);
+  };
+
+  const onChange = (e) => {
+    handleChange(e, updateState, setUpdateState);
+  };
+
   return (
     <div className="cards-body">
       {showFormEdit ? (
-        <Form
-          onSubmit={(e) => {
-            handleUpdate(e, id, updateState);
-            setShowFormEdit(false);
-          }}
-          cancel={() => setShowFormEdit(false)}
-        >
-          <Input
-            defaultValue={name}
-            onChange={(e) => {
-              handleChange(e, updateState, setUpdateState);
-            }}
-            name="name"
-          />
+        <Form onSubmit={onSubmit} cancel={() => setShowFormEdit(false)}>
+          <Input defaultValue={name} onChange={onChange} name="name" />
 
-          <TextArea
-            defaultValue={desc}
-            onChange={(e) => {
-              handleChange(e, updateState, setUpdateState);
-            }}
-            name="desc"
-          />
+          <TextArea defaultValue={desc} onChange={onChange} name="desc" />
         </Form>
       ) : (
         <Draggable draggableId={id.toString()} index={index}>
