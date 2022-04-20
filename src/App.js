@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
-import Activity from "./pages/Activity";
+import Activity from "./pages/Activity/ActivityContainer";
 // import Test from "./Test";
 
 function App() {

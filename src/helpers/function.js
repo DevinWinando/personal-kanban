@@ -6,7 +6,7 @@ export const getId = (prevId) => {
   }
 };
 
-export function getAllLocalStorage() {
+export const getAllLocalStorage = () => {
   const allLocalStorage = () => {
     let allLocalStorage = {},
       keys = Object.keys(localStorage),
@@ -32,4 +32,12 @@ export function getAllLocalStorage() {
   });
 
   return parsedData;
-}
+};
+
+export const handleChange = (e, state, setState) => {
+  let name = e.target.name;
+  let value = e.target.value;
+  state[name] = value;
+
+  setState(state);
+};

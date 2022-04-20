@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { usePopper } from "react-popper";
 import Data from "../Data";
 import { Link } from "react-router-dom";
-import { getId } from "../function";
+import { getId } from "../helpers/function";
 import Minicard from "../components/Minicard/Minicard";
 import MinicardHeader from "../components/Minicard/MinicardHeader";
 import Menu from "../components/Menu/Menu";
