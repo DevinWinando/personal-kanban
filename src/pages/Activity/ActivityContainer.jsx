@@ -13,6 +13,7 @@ function ActivityContainer() {
     name: "",
     todos: [],
     board: [],
+    boardOrder: [],
   });
 
   useEffect(() => {
@@ -25,18 +26,19 @@ function ActivityContainer() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
-  const handleAdd = (addState, setAddState) => {
+  const handleAdd = (boardId, addState) => {
     const newState = { ...state };
-    const boardTodosId = newState.board[0].todosId;
+    const boardIndex = newState.board.findIndex((board) => board.id == boardId);
+    const todosIdInBoard = newState.board[boardIndex].todosId;
+
     const prevId = newState.todos.map((todos) => todos.id);
     const id = getId(prevId);
 
-    boardTodosId.unshift(id);
+    todosIdInBoard.push(id);
     addState.id = id;
     newState.todos.push(addState);
 
     setState(newState);
-    setAddState({});
   };
 
   const handleDelete = (id) => {
@@ -61,13 +63,27 @@ function ActivityContainer() {
   };
 
   const onDragEnd = (result) => {
-    const { destination, source, draggableId } = result;
+    const { destination, source, draggableId, type } = result;
 
     if (!destination) {
       return;
     }
 
     if (destination.droppableId === source.droppableId && destination.index === source.index) {
+      return;
+    }
+
+    if (type === "boards") {
+      const newBoardOrder = Array.from(state.boardOrder);
+      newBoardOrder.splice(source.index, 1);
+      newBoardOrder.splice(destination.index, 0, draggableId);
+
+      const newState = {
+        ...state,
+        boardOrder: newBoardOrder,
+      };
+
+      setState(newState);
       return;
     }
 

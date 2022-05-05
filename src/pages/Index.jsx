@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from "react";
 import { usePopper } from "react-popper";
-import Data from "../Data";
+import { getAllLocalStorage } from "../helpers/function";
 import { Link } from "react-router-dom";
 import { getId } from "../helpers/function";
 import Minicard from "../components/Minicard/Minicard";
@@ -12,7 +12,7 @@ import Form from "../components/Form/Form";
 import Textarea from "../components/Form/Textarea";
 
 function Index() {
-  const localStorageData = Data();
+  const localStorageData = getAllLocalStorage();
   const [showFormAdd, setShowFormAdd] = useState(false);
   const [allActivity, setAllActivity] = useState(localStorageData);
   const [activity, setActivity] = useState({
@@ -21,24 +21,25 @@ function Index() {
     todos: [],
     board: [
       {
-        id: 1,
+        id: "board-1",
         title: "Task",
         category: "task",
         todosId: [],
       },
       {
-        id: 2,
+        id: "board-2",
         title: "In Progress",
         category: "progress",
         todosId: [],
       },
       {
-        id: 3,
+        id: "board-3",
         title: "Done",
         category: "done",
         todosId: [],
       },
     ],
+    boardOrder: ["board-1", "board-2", "board-3"],
   });
 
   const handleChange = (e) => {

@@ -2,8 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
+@layer utilities {
   .overflow-y-overlay {
     overflow-y: overlay;
+  }
+
+  .max-h-80vh {
+    max-height: 80vh;
   }
 }
